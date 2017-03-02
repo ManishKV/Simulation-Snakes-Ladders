@@ -2,7 +2,6 @@
 #####################################################################################
 ###############################   Sample input file   ###############################
 #####################################################################################
-##		###Sample Input
 ##		```
 ##		3
 ##
@@ -37,8 +36,6 @@ input_file <- readChar(fileName, file.info(fileName)$size)
 ## splitting file line wise
 input_file <- strsplit(input_file,"\n")
 
-## extracting the number of board configurations provided 
-num_boards = as.numeric(strsplit(input_file[[1]][3],"\r"))
 
 ## defining lists to store board configurations
 board_dice_prob = list()
@@ -48,9 +45,12 @@ board_ladders_end = list()
 board_snake_start = list()
 board_snake_end = list()
 
-## input file format starts from 3rd line
-input_start = 3
+
+## extracting the number of board configurations provided 
+## input file format starts from 2nd line
+input_start = 2
 input_offset = 0
+num_boards = as.numeric(strsplit(input_file[[1]][input_start],"\r"))
 
 ## iterate through file to read and store all configurations
 for (i in 1:num_boards){
@@ -103,7 +103,7 @@ game_sim = data.frame(row.names = 1:total_sim)
 
 ## dataframe to store average steps and upper/lower margin for each board's simulation
 average_steps = data.frame("Board"= numeric(num_boards), 
-                           "Steps"= numeric(num_boards), 
+                           "AverageSteps"= numeric(num_boards), 
                            "UpperMargin" = numeric(num_boards),
                            "LowerMargin" = numeric(num_boards))
 
@@ -138,7 +138,7 @@ ladder_snake <- function(next_position,steps){
 for (board in 1:num_boards){
   
   ## message to keep track of Simulations runs
-  print(paste0("Simulating for Board ",board," ..."))
+  #print(paste0("Simulating for Board ",board," ..."))
   
   ## dice probabilities
   dice_prob = board_dice_prob[[board]] 
@@ -226,12 +226,15 @@ for (board in 1:num_boards){
   
   ## store all results in dataframe
   average_steps$Board[board] <- Board_name
-  average_steps$Steps[board] <- sum(board_steps)/(total_sim-terminate)
-  average_steps$UpperMargin[board] <- average_steps$Steps[board]*1.1
-  average_steps$LowerMargin[board] <- average_steps$Steps[board]*0.9
+  average_steps$AverageSteps[board] <- sum(board_steps)/(total_sim-terminate)
+  average_steps$UpperMargin[board] <- average_steps$AverageSteps[board]*1.1
+  average_steps$LowerMargin[board] <- average_steps$AverageSteps[board]*0.9
+  
+  print(average_steps$AverageSteps[board])
 }
 
 ## display all the boards results at once
+print(paste0("Summary for the ",board," simulations:"))
 print(average_steps)
 View(average_steps)
 #####################################################################
