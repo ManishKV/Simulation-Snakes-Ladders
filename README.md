@@ -60,4 +60,4 @@ Average number of steps taken to complete the game for 4 boards configuration re
 3 Board_3    165.72287   182.29516   149.15058
 4 Board_4     19.28460    21.21306    17.35614
 ```
-UpperMargin and LowerMargin and +/- 10% of the AverageSteps
+UpperMargin and LowerMargin are +/- 10% of the AverageSteps
